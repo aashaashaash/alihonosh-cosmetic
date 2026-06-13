@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Ali Honosh Admin</title>
+
+<style>
+
+body{
+    font-family:Tahoma;
+    background:#f8f0f5;
+    margin:0;
+    padding:20px;
+}
+
+.form-container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+.header{
+    text-align:center;
+    color:#d81b60;
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.group{
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+input,select,textarea{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:120px;
+}
+
+.preview{
+    width:220px;
+    height:220px;
+    border:2px dashed #ccc;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:15px;
+    background:#fafafa;
+}
+
+.preview img{
+    max-width:100%;
+    max-height:100%;
+}
+
+.buttons{
+    margin-top:20px;
+    text-align:center;
+}
+
+button{
+    background:#d81b60;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.msg{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="form-container">
+
+<div class="header">
+لوحة إدارة كوزمتك علي حنوش
+</div>
+
+<div class="grid">
+
+<div class="group">
+<label>اسم المنتج</label>
+<input id="name">
+</div>
+
+<div class="group">
+<label>السعر</label>
+<input id="price">
+</div>
+
+<div class="group">
+<label>القسم</label>
+<input id="category">
+</div>
+
+<div class="group">
+<label>القسم الفرعي</label>
+<input id="subcategory">
+</div>
+
+<div class="group">
+<label>الشارة</label>
+<input id="badge">
+</div>
+
+<div class="group">
+<label>نفاذ الكمية</label>
+<select id="stock">
+<option value="لا">لا</option>
+<option value="نعم">نعم</option>
+</select>
+</div>
+
+</div>
+
+<br>
+
+<div class="group">
+<label>رابط الصورة</label>
+<input id="image">
+</div>
+
+<br>
+
+<div class="preview">
+<img id="previewImg">
+</div>
+
+<br>
+
+<div class="group">
+<label>الوصف</label>
+<textarea id="description"></textarea>
+</div>
+
+<div class="buttons">
+<button onclick="saveProduct()">حفظ المنتج</button>
+</div>
+
+<div class="msg" id="msg"></div>
+
+</div>
+
+<script>
+
+document.getElementById("image").addEventListener("input",function(){
+    document.getElementById("previewImg").src=this.value;
+});
+
+function saveProduct(){
+
+const data={
+
+name:document.getElementById("name").value,
+category:document.getElementById("category").value,
+subcategory:document.getElementById("subcategory").value,
+price:document.getElementById("price").value,
+description:document.getElementById("description").value,
+image:document.getElementById("image").value,
+badge:document.getElementById("badge").value,
+stock:document.getElementById("stock").value
+
+};
+
+fetch("https://script.google.com/macros/s/AKfycbz8yypPQ152t6_ysJr-hd-EH-bgywXONKYcU-Q-ae-K8MSEygavmZJW0cpSQqtZyMdCNQ/exec",{
+method:"POST",
+body:JSON.stringify(data)
+})
+.then(r=>r.json())
+.then(res=>{
+document.getElementById("msg").innerHTML="✅ تم حفظ المنتج بنجاح";
+})
+.catch(err=>{
+document.getElementById("msg").innerHTML="❌ فشل الحفظ";
+});
+
+}
+
+</script>
+
+</body>
+</html>
