@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>كوزمتك علي حنوش - جمالكِ يبدأ من هنا</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. المتغيرات والتنسيقات الأساسية (Reset & Layout) - الدفعة الأولى والثانية
+       ========================================================================== */
+    :root {
+      --brand: #d81b60;
+      --brand-dark: #ad1457;
+      --brand-light: #fff0f5;
+      --text: #222;
+      --muted: #666;
+      --bg: #fcf8fa;
+      --card: #fff;
+      --border: #f1e4e9;
+      --shadow: 0 4px 12px rgba(216, 27, 96, 0.08);
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* الهيدر وشريط البحث */
+	.header-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#fff;
+    height:60px;
+	    flex-direction:row-reverse;
+    padding:0 12px;
+    border-bottom:1px solid var(--border);
+	
+}
+
+.logo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex:1;
+    background:none;
+    border:none;
+    padding:0;
+    margin:0;
+}
+
+.logo img{
+    width:100px;
+    height:auto;
+    display:block;
+}
+   .main-header {
+  position: relative;
+  background: #fff;
+    padding:8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+   .search-bar {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 40px 10px 45px; /* زدنا المساحة في اليسار (الرقم الرابع) */
+  border: 1.5px solid var(--border);
+  border-radius: 25px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-bar .icon {
+  position: absolute;
+  right: 14px; /* مكان العدسة */
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+/* تنسيق زر المسح الجديد */
+#clearSearchBtn {
+  position: absolute;
+  left: 15px; /* هنا التغيير: بدلاً من right أصبح left */
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: none; /* مخفي افتراضياً */
+  z-index: 10;   /* لضمان ظهوره فوق أي عنصر آخر */
+}
+    /* أزرار الهيدر العلوية */
+	
+	.top-btn{
+    position:static;
+    transform:none;
+
+    width:38px;
+    height:38px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+    flex-shrink:0;
+}
+
+
+    .top-btn:hover {
+      background: #eee;
+      color: #333;
+    }
+    #backBtn { right: 12px; display: block; }
+    #appsBtn { left: 12px; }
+
+    #appsBtn.apps-btn {
+      border: 1.5px solid var(--brand);
+      color: var(--brand);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    #appsBtn.apps-btn:hover {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    /* شبكة المنتجات (Products Grid) */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      padding: var(--space-md);
+	  min-height:260px;
+
+    }
+
+    .product {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 8px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s;
+    }
+    .product:hover {
+      transform: translateY(-3px);
+    }
+
+    .product.out-of-stock {
+      opacity: 0.65;
+    }
+
+    .out-of-stock-label {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-10deg);
+      background: rgba(229, 57, 53, 0.9);
+      color: #fff;
+      padding: 6px 12px;
+      font-weight: bold;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      white-space: nowrap;
+    }
+.product-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 5px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* يقص النص بعد سطرين لمنع التداخل */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.8em; /* يضمن ثبات ارتفاع العنوان */
+}
+    .product-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .product-price {
+      font-size: 0.95rem;
+      color: var(--brand-dark);
+      font-weight: 900;
+    }
+
+    .badge {
+      background: var(--brand-light);
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .product-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .spec-btn {
+      width: 100%;
+      background: #f7f7f7;
+      border: 1px solid #ddd;
+      color: #555;
+      padding: 6px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .order-btn {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+    .order-btn:hover {
+      background: var(--brand-dark);
+    }
+
+    .fav-btn {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(255, 255, 255, 0.85);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .product-rating {
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+      margin-top: var(--space-sm);
+      color: #ffb74d;
+    }
+
+    /* ==========================================================================
+       2. السلايدر وبانر الفحص الطبي والأقسام المنزلقة - الدفعة الثالثة والخامسة
+       ========================================================================== */
+    /* بانر الفحص الطبي */
+    .banner-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      margin: 6px var(--space-md);
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,.08);
+      border-radius: 8px;
+    }
+
+    .banner-text {
+      font-size: 0.82rem;
+	    line-height: 1.3;
+      font-weight: bold;
+      color: #43a047;
+      margin: 0;
+    }
+
+    .banner-btn {
+      background: #43a047;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      font-size:0.75rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background .2s;
+	   min-width: 80px;
+    }
+    .banner-btn:hover { background: #388e3c; } 
+
+    /* الإعلان المتنقل Carousel */
+ /* هذا هو الكود الجديد للسلايدر، استبدلي القديم به */
+ #image-carousel{
+    position:relative;
+    width:100%;
+    height:220px;
+    overflow:hidden;
+    background:#fff;
+}
+
+
+.slide-label {
+  width: 50%;
+  color: #43a047;
+  font-weight: bold;
+  font-size: 1.1rem; /* تصغير الخط قليلاً ليناسب المساحة */
+  text-align: right;
+  padding: 0 15px;
+  line-height: 1.4;
+}
+@media (max-width: 767px) {
+    #image-carousel { height: 180px; } /* ارتفاع مناسب للموبايل */
+}
+   @media (max-width: 767px) {
+  .carousel-slide { height: 180px; }
+  .slide-label { font-size: 0.9rem; }
+}
+    /* أزرار التحكم بالسلايدر */
+    .prev-btn, .next-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,.7);
+      border: none;
+      font-size: 1.8rem;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      color: var(--brand);
+      cursor: pointer;
+      z-index: 9999;
+      border-radius: 50%;
+      text-align: center;
+    }
+    .prev-btn { left: 10px; } .next-btn { right: 10px; }
+@media (max-width: 767px) {
+    .prev-btn,
+    .next-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 1.2rem;
+        display: block;
+    }
+}
+    .carousel-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 10;
+    }
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 4px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .dot.active {
+      background: var(--brand);
+      transform: scale(1.3);
+      width: 12px;
+      border-radius: 4px;
+    }
+
+    /* شريط الفئات المنزلق اللانهائي الذكي Marquee */
+    #marqueeWrapper {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      direction: rtl;
+      padding: 8px 0;
+      background: transparent;
+    }
+
+    #marqueeCats {
+      display: flex;
+      white-space: nowrap;
+      gap: 12px;
+      animation: marqueeSlide 22s linear infinite;
+      width: max-content;
+    }
+    #marqueeCats:hover { animation-play-state: paused; }
+
+    .category-btn {
+      flex: 0 0 auto !important;
+      cursor: pointer;
+    }
+
+    .category-box {
+      min-width: 100px;
+      padding: 10px 14px;
+      background: #f8c8da;
+      border-radius: 20px;
+      color: #d81b60;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(216,27,96,0.15);
+      transition: all 0.2s;
+    }
+    .category-btn.selected .category-box, .category-box:hover {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    @keyframes marqueeSlide {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(50%); } /* للتحريك السلس المتوافق مع اتجاه RTL */
+    }
+
+    /* الدوائر الفرعية المنسدلة */
+    .dropdown {
+      padding: var(--space-md);
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .subcategory-circle {
+      background: var(--brand-light);
+      color: var(--brand-dark);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+    }
+    .subcategory-circle:hover {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    /* ==========================================================================
+       3. القوائم المنبثقة، الشاشات الجانبية، الفوتر السفلي - الدفعة الرابعة والسادسة
+       ========================================================================== */
+    /* النوافذ المنبثقة الـ Modals والتأثير التدريجي لفتحها */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      padding: var(--space-md);
+    }
+    .modal.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      padding: var(--space-lg);
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: modalSlide up 0.3s ease-out;
+    }
+
+    .close-modal-x {
+      float: left;
+      cursor: pointer;
+      font-size: 1.8rem;
+      color: var(--brand);
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    /* السلة وشريط ملخص الشحن */
+    .cart-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .cart-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cart-action-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      background: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .cart-summary-box {
+      background: #fdfafd;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 14px 0;
+      border: 1px solid var(--border);
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+    .summary-row.total {
+      font-weight: bold;
+      color: var(--brand-dark);
+      font-size: 1.05rem;
+      border-top: 1px solid #ddd;
+      padding-top: 6px;
+      margin-top: 6px;
+    }
+
+    /* شريط التنقل السفلي للهواتف */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -3px 12px rgba(0,0,0,0.06);
+      z-index: 9000;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+      flex-grow: 1;
+      height: 100%;
+      position: relative;
+    }
+    .nav-icon { font-size: 20px; margin-bottom: 2px; }
+    .nav-btn.active { color: var(--brand-dark); }
+
+    body { padding-bottom: 70px; } /* منع إخفاء المحتوى خلف شريط التنقل */
+
+    /* القائمة الجانبية المنسدلة للتطبيقات Sidebar */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100vh;
+      background: #fff;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+      z-index: 12000;
+      overflow-x: hidden;
+      transition: width 0.3s ease-in-out;
+    }
+
+    /* التنبيهات المنبثقة الصغيره (Toast) */
+    .toast {
+      position: fixed;
+      bottom: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      z-index: 20000;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: none;
+    }
+
+    /* الفوتر أسفل الصفحة */  .info-footer {
+    text-align:center;
+    color:#fff;
+
+background:linear-gradient(
+135deg,
+#d81b60,
+#c2185b,
+#ad1457
+);    background-size:cover;
+    background-position:center;
+
+    margin-top:20px;
+    margin-bottom:20px;
+
+    padding:30px 20px;
+
+    border-radius:18px;
+
+    position:relative;
+    overflow:hidden;
+
+box-shadow:0 8px 30px rgba(216,27,96,.25);}
+
+    .about-dropdown {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      bottom: 70px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      padding: 8px;
+      z-index: 9999;
+      width: 130px;
+    }
+    .about-dropdown button {
+      font-size: 12px;
+      padding: 8px 10px;
+      background-color: var(--brand-light);
+      border: none;
+      text-align: right;
+      border-radius: 6px;
+      color: var(--brand-dark);
+      margin: 3px 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* تصفية وحجب العرض */
+    .hide { display: none !important; }
+	.main-header {
+  padding: 0px var(--space-md); /* قللنا الـ padding العلوي والسفلي هنا أيضاً */
+}
+/* إصلاح مظهر السلايدر ليعرض الباترن بشكل صحيح */
+/* هذا الكود سيجعل الباترن خلفية ثابتة للسلايدر */
+.product-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.slide-hit{
+    position:absolute;
+    inset:0;
+    z-index:5;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+}
+#carousel-inner{
+    display:flex;
+    width:100%;
+    height:100%;
+    transition:transform .5s ease;
+}
+.banner-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+.carousel-slide{
+    flex:0 0 100%;
+    width:100%;
+    height:100%;
+}
+.sidebar-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    border-bottom:1px solid #f3f3f3;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.sidebar-item:hover{
+    background:#fff0f5;
+}
+
+.sidebar-icon{
+    width:32px;
+    height:32px;
+    object-fit:contain;
+    flex-shrink:0;
+}.info-footer{
+    text-align:center;
+    color:#fff;
+    background:url("assest/banner/footer-bg.jpg");
+    background-size:cover;
+    background-position:center;
+    margin:25px 0;
+    padding:35px 20px;
+    border-radius:18px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 8px 25px rgba(216,27,96,.18);
+}
+
+.info-footer::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(216,27,96,.82);
+    backdrop-filter:blur(2px);
+}
+
+.info-footer > *{
+    position:relative;
+    z-index:2;
+}
+
+.footer-title{
+    font-size:30px;
+    font-weight:900;
+    margin-bottom:5px;
+    letter-spacing:.5px;
+}
+
+.footer-subtitle{
+    font-size:13px;
+    letter-spacing:4px;
+    opacity:.9;
+    margin-bottom:15px;
+}
+
+.footer-slogan{
+    font-size:17px;
+    margin-bottom:22px;
+    color:#ffe7f0;
+}
+
+.footer-line{
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.15);
+    max-width:420px;
+    margin:10px auto;
+    padding:12px 18px;
+    border-radius:30px;
+    font-weight:700;
+    backdrop-filter:blur(8px);
+}
+  </style>
+</head>
+<body>
+
+<div class="header-top">
+
+    <button id="appsBtn" class="top-btn apps-btn" aria-label="الأقسام الجانبية">
+      <svg fill="none" height="20" viewBox="0 0 24 24" width="20">
+        <rect fill="currentColor" height="7" rx="2" width="7" x="3" y="3"></rect>
+        <rect fill="currentColor" height="7" rx="2" width="7" x="14" y="3"></rect>
+        <rect fill="currentColor" height="7" rx="2" width="7" x="3" y="14"></rect>
+        <rect fill="currentColor" height="7" rx="2" width="7" x="14" y="14"></rect>
+      </svg>
+    </button>
+
+    <div class="logo">
+        <img src="assest/banner/logo_transparent.png?v=1" alt="كوزمتك علي حنوش">
+    </div>
+
+    <button id="backBtn" class="top-btn" aria-label="رجوع">
+        <i class="fa-solid fa-arrow-right"></i>
+    </button>
+
+</div>
+  <div class="main-header">  
+  <form class="search-bar" onsubmit="event.preventDefault();">
+  <button type="button" id="clearSearchBtn" onclick="clearSearch()">✖</button>
+  <input id="searchInput" oninput="handleInput()" placeholder="ابحث عن منتج..." type="text"/>
+  <button class="icon" type="submit">
+    <i class="fa-solid fa-search"></i>
+  </button>
+</form>
+  </div>
+  <div class="dropdown hide" id="dropdown"></div>
+  <div class="banner-flex" id="health-banner">
+<p class="banner-text">✨ توصية مجانية لكِ</p>
+<button id="healthTestBtnInline" class="banner-btn" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSeS3l-H6kbnxklUnW7cpr_ktwIE_f8yxPSQhtPAu7rNlpwTUQ/viewform', '_blank');">
+  ابدئي الآن
+</button>
+  </div>
+  <section id="image-carousel">
+
+    <button class="prev-btn" onclick="prevImage()">‹</button>
+
+    <div id="carousel-inner">
+
+    <div class="carousel-slide">
+	 <button class="slide-hit"
+            onclick="filterByMainCategory('منتجات طبية')">
+        <img class="banner-img" src="assest/banner/2.jpg">
+		    </button>
+    </div>
+
+    <div class="carousel-slide">
+	
+	 <button class="slide-hit"
+	  onclick="filterByMainCategory('مقاوم للماء')">
+        <img class="banner-img" src="assest/banner/1.png">
+				    </button>
+
+    </div>
+
+    <div class="carousel-slide">
+	
+	 <button class="slide-hit"
+	  onclick="filterByMainCategory('عضوي')">
+        <img class="banner-img" src="assest/banner/3.png">
+				    </button>
+
+    </div>
+
+    <div class="carousel-slide">
+	
+	 <button class="slide-hit"
+	  onclick="filterByMainCategory('اصدار محدود')">
+        <img class="banner-img" src="assest/banner/7.jpg">
+				    </button>
+
+    </div>
+
+    <div class="carousel-slide">
+	
+	 <button class="slide-hit"
+	  onclick="filterByMainCategory('روتين')">
+        <img class="banner-img" src="assest/banner/4.jpg">
+				    </button>
+
+    </div>
+
+    <div class="carousel-slide">
+	
+	 <button class="slide-hit"
+	  onclick="filterByMainCategory('عرض خاص')">
+        <img class="banner-img" src="assest/banner/6.jpg">
+				    </button>
+
+    </div>
+
+    <div class="carousel-slide">
+	
+	 <button class="slide-hit"
+            onclick="filterByMainCategory('الأكثر مبيعا')">
+        <img class="banner-img" src="assest/banner/5.jpg">
+				    </button>
+
+    </div>
+
+	</div>
+
+    <div id="carousel-dots" class="carousel-dots"></div>
+
+    <button class="next-btn" onclick="nextImage()">›</button>
+
+</section>
+  <div id="marqueeWrapper">
+    <div id="marqueeCats"></div>
+  </div><div class="products" id="product-list"></div>
+
+<div class="info-footer">
+
+    <div class="footer-title">
+        كوزمتك علي حنوش
+    </div>
+
+    <div class="footer-subtitle">
+        ALI HONOSH COSMETIC
+    </div>
+
+    <div class="footer-slogan">
+        Beauty • Care • Confidence
+    </div>
+
+    <div class="footer-line">
+        🕑 أوقات العمل: 10 صباحاً - 12 مساءً
+    </div>
+
+    <div class="footer-line">
+        🚚 التوصيل إلى جميع محافظات العراق
+    </div>
+
+    <div class="footer-line">
+        💳 الدفع عند الاستلام
+    </div>
+
+    <div class="footer-line">
+        ✨ منتجات أصلية 100%
+    </div>
+
+</div>
+
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="homeBtn">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">الرئيسية</span>
+    </button>
+    <button class="nav-btn" id="cartBtn" onclick="showCart();">
+      <span class="nav-icon">🛒</span>
+      <span class="nav-label">السلة</span>
+      <span class="cart-badge" id="cartCountFooter" style="position:absolute;top:5px;right:22px;font-size:10px;background:#d81b60;color:white;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;">0</span>
+    </button>
+    <button id="healthTestBtn" class="nav-btn">
+      <span class="nav-icon">🍏</span>
+      <span class="nav-label">اختبرٍ صحتك</span>
+    </button>
+    <button class="nav-btn" id="favBtn">
+      <span class="nav-icon">❤️</span>
+      <span class="nav-label">المفضلة</span>
+    </button>
+    <button class="nav-btn" id="aboutBtn" onclick="toggleAboutDropdown(event);">
+      <span class="nav-icon">
+        <svg fill="none" height="24" viewBox="0 0 24 24" width="24"><rect fill="currentColor" height="3" rx="1.5" width="24" y="4"></rect><rect fill="currentColor" height="3" rx="1.5" width="24" y="10.5"></rect><rect fill="currentColor" height="3" rx="1.5" width="24" y="17"></rect></svg>
+      </span>
+      <span class="nav-label">علي حنوش</span>
+    </button>
+
+    <div class="about-dropdown" id="aboutDropdown">
+      <button onclick="showModal('about'); closeAboutDropdown();">من نحن</button>
+      <button onclick="showModal('contact'); closeAboutDropdown();">اتصل بنا</button>
+      <button onclick="showModal('location'); closeAboutDropdown();">مواقع الفروع</button>
+    </div>
+  </div>
+
+  <div id="sidebar">
+    <div style="padding:16px 16px 10px 0; text-align:right;">
+      <span onclick="closeSidebar()" style="font-size:2em; cursor:pointer; color:#d81b60; font-weight:bold;">×</span>
+    </div>
+    <div id="sidebarContent" style="padding:0 16px 16px 0;"></div>
+  </div>
+
+  <div class="modal" id="location">
+    <div class="modal-content" style="max-width:400px;">
+      <span class="close-modal-x" onclick="closeModal('location')">×</span>
+      <p style="margin-top:20px;"><a href="https://maps.google.com" target="_blank">📍 موقع الفرع الأول على خرائط كوكل</a></p>
+      <p><a href="https://maps.google.com" target="_blank">📍 موقع الفرع الثاني على خرائط كوكل</a></p>
+    </div>
+  </div>
+
+  <div class="modal" id="contact">
+    <div class="modal-content" style="max-width:400px;">
+      <span class="close-modal-x" onclick="closeModal('contact')">×</span>
+      <h2 style="color:#d81b60; margin-bottom:12px; margin-top:15px;">اتصل بنا</h2>
+      <p>📍 الفرع 1: السماوة، السوق المسكوف، مقابل مجمع يوتا</p>
+      <p>أدهم📞 رقم الهاتف: <a href="tel:07808183123" style="color:#ad1457;">07808183123</a></p>
+      <p>أكرم📞 رقم الهاتف: <a href="tel:07806132510" style="color:#ad1457;">07806132510</a></p>
+      <p>📍 الفرع 2: مول البركة، الطابق الثاني، مقابل مطعم شمس</p>
+      <p>أركان📞 رقم الهاتف: <a href="tel:07818004585" style="color:#ad1457;">07818004585</a></p>
+      <p>💬 واتساب: <a href="https://wa.me/9647818004585" style="color:#ad1457;" target="_blank">اضغط هنا</a></p>
+      <hr style="margin:10px 0; border:0; border-top:1px solid #eee;">
+      <div style="display:flex; justify-content:space-around; margin-top:10px;">
+         <a href="https://wa.me/9647818004585" target="_blank" style="color:#25D366; font-weight:bold;">💬 واتساب</a>
+         <a href="https://www.instagram.com/ali_honosh" target="_blank" style="color:#C13584; font-weight:bold;">📸 إنستغرام</a>
+         <a href="https://www.facebook.com/share/16UEZy9EHd/" target="_blank" style="color:#4267B2; font-weight:bold;">📘 فيسبوك</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="about">
+    <div class="modal-content" style="max-width:450px;">
+      <span class="close-modal-x" onclick="closeModal('about')">×</span>
+      <h2 style="color:#d81b60; margin-bottom:12px; margin-top:15px;">من نحن</h2>
+      <p>💫 قصة كوزمتك علي حنوش – حين يتحول الشغف إلى علامة فارقة 💎</p>
+      <p>بدأنا في عام 2006، عندما لم يكن أحد يؤمن أن "الكوزمتك" سيكون يوماً ما أسلوب حياة. في زمنٍ كنا نزرع أول بذور الحلم وسط أرض صلبة، بين تعب السوق وقلة الفُرَص.</p>
+      <p>💫 ✨ لم نبع منتجات فقط، بل بعنا ثقة... وقدمنا نصيحة قبل البيع. رفضنا أن نكون كأي متجر، وأصررنا أن نكون الاسم الذي يُثق به.</p>
+      <p>🔬 خضنا تدريبات ودورات، وحملنا دفاتر وقلم... تعلمنا أسرار البشرة، وحلول الشعر، وطقوس الجمال النقي. واليوم... نحن لسنا فقط محلًا. نحن الاسم، الهوية، والسر الذي تحتفظ به الجميلات بينهن.</p>
+      <p>📲 وأطلقنا متجرنا الإلكتروني واجهة بسيطة... تصفح، اختاري، أضيفي إلى السلة... وفي لحظات، يصلك الجمال حتى بابك 💌</p>
+    </div>
+  </div>
+
+  <div class="modal" id="cartModal">
+    <div class="modal-content" style="max-width:420px;">
+      <span class="close-modal-x" onclick="closeModal('cartModal')">×</span>
+      <h2 style="color:#d81b60; margin-bottom:14px; margin-top:15px;">سلة المشتريات</h2>
+      <ul id="cartItems" style="list-style:none; padding:0; margin:0;"></ul>
+      <div id="cartSummary"></div>
+      <hr style="margin:12px 0; border:0; border-top:1px solid var(--border);"/>
+      <h3 style="color:#d81b60; margin-bottom:10px;">معلومات الزبون</h3>
+      <input id="custName" placeholder="الاسم الثلاثي" style="width:100%; margin-bottom:8px; padding:10px; border-radius:8px; border:1px solid #d81b60; outline:none;" type="text"/>
+      <input id="custAddress" placeholder="العنوان بالتفصيل" style="width:100%; margin-bottom:8px; padding:10px; border-radius:8px; border:1px solid #d81b60; outline:none;" type="text"/>
+      <input id="custPhone" placeholder="رقم الهاتف" style="width:100%; margin-bottom:8px; padding:10px; border-radius:8px; border:1px solid #d81b60; outline:none;" type="text"/>
+      <input id="custLocation" placeholder="رابط اللوكيشن (اختياري)" style="width:100%; margin-bottom:12px; padding:10px; border-radius:8px; border:1px solid #d81b60; outline:none;" type="text"/>
+      <button onclick="submitCartOrder()" style="width:100%; background:#d81b60; color:#fff; padding:12px; border:none; border-radius:8px; font-size:1.1rem; font-weight:bold; cursor:pointer; box-shadow: 0 4px 10px rgba(216,27,96,0.2);">إرسال الطلب عبر واتساب 💬</button>
+      <button onclick="clearCart()" style="width:100%; background:#fff0f6; color:#d81b60; padding:10px; border:none; border-radius:8px; font-size:0.95rem; margin-top:8px; cursor:pointer;">تفريغ السلة</button>
+    </div>
+  </div>
+
+  <div class="modal" id="fullImgModal" onclick="closeModal('fullImgModal')">
+    <div class="modal-content" style="max-width:90%; max-height:90vh; padding:0; background:#000; position:relative;" onclick="event.stopPropagation()">
+      <img id="fullImg" src="" alt="عرض مكبر" style="max-width:100%; max-height:85vh; display:block; margin:auto; border-radius:8px;" />
+      <button onclick="closeModal('fullImgModal')" style="position:absolute; top:8px; left:8px; background:#fff0f6; color:#d81b60; border:1px solid #d81b60; border-radius:10px; padding:6px 12px; font-weight:bold; cursor:pointer; z-index:100;">إغلاق</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // المتغيرات والمخازن العامة
+    let ALL_PRODUCTS = [];
+    let CATEGORIES = [];
+    let cart = [];
+    let selectedCategory = null;
+    let selectedSubcategory = null;
+    let sidebarOpen = false;
+    let sidebarSelectedCat = null;
+    let currentSlide = 0;
+    let slideInterval;
+
+    const CATEGORY_ICONS = {
+
+  "عطور": "assest/icons/perfume.png",
+
+  "عناية بالوجه": "assest/icons/face-care.png",
+
+  "عناية بالجسم واليدين": "assest/icons/body-care.png",
+
+  "عناية بالشعر": "assest/icons/hair-care.png",
+  
+  "عناية شخصية" : " assest/icons/personal-care.png", 
+  
+  "مكياج وتجميل": "assest/icons/makeup.png",
+
+  "مناطق حساسه": "assest/icons/sensitive-area.png",
+
+  "مزيل شعر": "assest/icons/hair-removal.png",
+
+  "عطور شعر": "assest/icons/hair-perfume.png",
+
+  "مسكات": "assest/icons/musk.png",
+
+  "معطرات جسم": "assest/icons/body-mist.png",
+
+  "معطرات جو": "assest/icons/air-freshener.png",
+
+  "منتجات طبية": "assest/icons/medical-products.png",
+
+  "روتين": "assest/icons/routine.png",
+
+  "اصدار محدود": "assest/icons/limited-edition.png",
+
+  "جديد": "assest/icons/new arrival.png",
+
+  "مقاوم للماء": "assest/icons/Waterproof.png",
+
+  "عرض خاص": "assest/icons/special-offer.png",
+
+  "الاكثر مبيعا": "assest/icons/best-seller.png",
+
+  "عضوي": "assest/icons/organic.png"
+
+};
+
+    // التحميل الأول واستعادة البيانات المستمرة من المستعرض
+    window.addEventListener("DOMContentLoaded", () => {
+      if(localStorage.getItem("custName")) document.getElementById("custName").value = localStorage.getItem("custName");
+      if(localStorage.getItem("custAddress")) document.getElementById("custAddress").value = localStorage.getItem("custAddress");
+      if(localStorage.getItem("custPhone")) document.getElementById("custPhone").value = localStorage.getItem("custPhone");
+      if(localStorage.getItem("custLocation")) document.getElementById("custLocation").value = localStorage.getItem("custLocation");
+      
+      // جلب وبناء قواعد البيانات الحية
+    fetchLiveData();
+    initCarousel();
+});
+
+    // جلب البيانات وبناء القوائم آلياً
+    function fetchLiveData() {
+      fetch("https://opensheet.vercel.app/1natZeQMgi5yLQNrCulNuoSMh2SRPzDy9il_KjbOhllg/sheet1")
+        .then(res => res.json())
+        .then(data => {
+          ALL_PRODUCTS = data;
+
+          // بناء قائمة الشارات (badges) من الشيت مباشرة
+          const badges = Array.from(new Set(
+            data.map(p => (p["شارة"]||"").trim()).filter(b => b !== "")
+          )).map(name => ({
+            name,
+            icon: CATEGORY_ICONS[name] || "",
+            subs: [],
+            type: "badge"
+          }));
+
+          // بناء قائمة الأقسام الرئيسية
+          const sectionsMap = {};
+          data.forEach(p => {
+            const cat = (p["القسم"]||"").trim();
+            const sub = (p["القسم الفرعي"]||"").trim();
+            if (!cat) return;
+            if (!sectionsMap[cat]) sectionsMap[cat] = new Set();
+            if (sub) sectionsMap[cat].add(sub);
+          });
+
+          const sections = Object.entries(sectionsMap).map(([name, subsSet]) => ({
+            name,
+            icon: CATEGORY_ICONS[name] || "",
+            subs: Array.from(subsSet),
+            type: "section"
+          }));
+
+          // الدمج النهائي للأقسام
+          CATEGORIES = [...badges, ...sections];
+
+          // الرسم الحي للواجهة
+          renderMarqueeCategories();
+          renderSidebarCategories();
+          renderProducts();
+        })
+        .catch(err => console.error("خطأ أثناء الاتصال بقاعدة البيانات الحية:", err));
+    }
+
+    // رسم شريط الفئات المتحرك بشكل لانهائي وبدون فراغات ميتة
+    function renderMarqueeCategories() {
+      const container = document.getElementById("marqueeCats");
+      if (!container) return;
+      container.innerHTML = "";
+      
+      CATEGORIES.forEach((cat, idx) => {
+        container.innerHTML += `
+          <div class="category-btn${cat.name === selectedCategory ? ' selected' : ''}" onclick="toggleCategory(${idx})" title="${cat.name}">
+            <div class="category-box">${cat.name}</div>
+          </div>`;
+      });
+      
+      // التكرار البرمجي الدقيق لضمان حركة انزلاق لانهائية سلسة
+      if(CATEGORIES.length > 0) {
+        container.innerHTML += container.innerHTML;
+      }
+    }
+
+    // معالجة النقر على فئة معينة من شريط الفئات المنزلق
+	function toggleCategory(idx) {
+
+  document.getElementById("health-banner").classList.add("hide");
+  document.getElementById("image-carousel").classList.add("hide");
+  document.getElementById("marqueeWrapper").classList.add("hide");
+
+  const cat = CATEGORIES[idx];
+
+  if (!cat) return;
+
+  if (cat.type === "badge") {
+
+    selectedCategory = cat.name;
+    selectedSubcategory = null;
+
+    document.getElementById("dropdown").classList.add("hide");
+
+    renderProducts();
+
+  } else {
+
+    selectedCategory = cat.name;
+    selectedSubcategory = null;
+
+    renderDropdown(idx);
+    renderProducts();
+  }
+}
+
+    // رسم وعرض الدوائر الفرعية للقسم المختار
+    function renderDropdown(idx) {
+      const dropdown = document.getElementById("dropdown");
+      dropdown.innerHTML = "";
+      if (idx === null || !CATEGORIES[idx]) {
+        dropdown.classList.add("hide");
+        return;
+      }
+      const cat = CATEGORIES[idx];
+      if (!cat.subs || cat.subs.length === 0) {
+        dropdown.classList.add("hide");
+        return;
+      }
+
+      let content = `<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px;">`;
+      cat.subs.forEach(sub => {
+        content += `
+          <div class="subcategory-circle" onclick="selectSubcategory('${cat.name}','${sub}')">
+            <span>${sub}</span>
+          </div>`;
+      });
+      content += `</div>`;
+      dropdown.innerHTML = content;
+      dropdown.classList.remove("hide");
+    }
+
+    function selectSubcategory(cat, sub) {
+      selectedCategory = cat;
+      selectedSubcategory = sub;
+      document.getElementById("dropdown").classList.add("hide");
+      renderProducts();
+    }
+	function filterByMainCategory(badge) {
+
+  document.getElementById("health-banner").classList.add("hide");
+  document.getElementById("image-carousel").classList.add("hide");
+  document.getElementById("marqueeWrapper").classList.add("hide");
+
+  selectedCategory = badge;
+  selectedSubcategory = null;
+
+  document.getElementById("dropdown").classList.add("hide");
+
+  renderProducts();
+
+  document.getElementById("product-list").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+  });
+}
+
+    // دالة رسم وعرض شبكة كروت المنتجات حياً بالكامل
+    function renderProducts(filteredList, isWishlist = false) {
+      const container = document.getElementById("product-list");
+      let filtered = filteredList || ALL_PRODUCTS;
+
+      if (selectedCategory) {
+        filtered = filtered.filter(p => {
+          const cat = (p["القسم"] || "").trim();
+          const badge = (p["شارة"] || "").trim();
+          return cat === selectedCategory.trim() || badge === selectedCategory.trim();
+        });
+      }
+      if (selectedSubcategory) {
+        filtered = filtered.filter(p => (p["القسم الفرعي"] || "").trim() === selectedSubcategory.trim());
+      }
+
+      container.innerHTML = "";
+      if (isWishlist) {
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; font-size:1.2em; color:var(--brand-dark); font-weight:bold; margin-bottom:6px;">منتجاتك المفضلة ❤️</div>`;
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML += "<div style='grid-column: 1/-1; text-align:center; color:var(--brand); padding:40px; font-size:1.1em;'>لا توجد منتجات متوفرة حالياً في هذا القسم.</div>";
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "product";
+const isOutOfStock = item["نفاذ"]?.trim() === "نعم";    
+    if (isOutOfStock) card.classList.add("out-of-stock");
+
+        let isFav = getWishlist().includes(item["الاسم"]);
+        let favBtn = `
+          <button class="fav-btn" aria-label="إضافة إلى المفضلة" onclick="event.stopPropagation(); toggleFavorite('${(item["الاسم"]||"").replace(/'/g, "\\'")}')">
+            <span>${isFav ? "❤️" : "♡"}</span>
+          </button>`;
+
+        let rating = getProductRating(item["الاسم"]);
+        let starsHtml = '<div class="product-rating">';
+        for (let i = 1; i <= 5; i++) {
+          starsHtml += `<span onclick="event.stopPropagation(); rateProduct('${item["الاسم"]}',${i})" style="cursor:pointer;">${i <= rating ? "★" : "☆"}</span>`;
+        }
+        starsHtml += '</div>';
+
+        let url = item["الصورة"] ? item["الصورة"].trim() : "";
+        url = getDirectImageUrl(url);
+
+        // التحكم الذكي في الميديا وعرض الصور والفيديو بدقة
+        let mediaHtml = "";
+        if (url.includes("youtube.com") || url.includes("youtu.be")) {
+          let videoId = url.includes("v=") ? url.split("v=")[1].split("&")[0] : url.split("youtu.be/")[1].split("?")[0];
+          mediaHtml = `<iframe width="100%" height="150" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>`;
+        } else if (url.toLowerCase().endsWith(".mp4") || url.includes("drive.google.com/uc?export=view&id=")) {
+          mediaHtml = `<video class="product-video" autoplay loop muted playsinline width="100%" height="150" style="object-fit:cover; border-radius:10px;"><source src="${url}" type="video/mp4"></video>`;
+        } else if (url) {
+          mediaHtml = `<img src="${url}" alt="${item["الاسم"] || ''}" style="max-height:100px; max-width:100%; object-fit:contain;" />`;
+        } else {
+          mediaHtml = `<div style="height:150px; display:flex; align-items:center; justify-content:center; background:#f5f5f5; color:#aaa; font-size:12px;">لا توجد صورة</div>`;
+        }
+
+        let badgeHtml = item["شارة"] && item["شارة"].trim() !== "" ? `<span class="badge">${item["شارة"]}</span>` : '<span></span>';
+
+        card.innerHTML = `
+          ${favBtn}
+          <div class="product-header" style="height:110px; display:flex; justify-content:center; align-items:center; overflow:hidden; cursor:pointer;" onclick="openFullImage('${url}')">
+            ${mediaHtml}
+          </div>
+          ${isOutOfStock ? '<div class="out-of-stock-label">نفذت الكمية الحالية</div>' : ''}
+          <div class="product-info" style="margin-top:8px;">
+            <h2 class="product-title">${item["الاسم"] || "منتج بدون اسم"}</h2>
+            <div class="product-price-row">
+              ${badgeHtml}
+              <span class="product-price">${item["السعر"] === "هدية" ? '🎁 <b style="color:#d81b60;">هدية!</b>' : (item["السعر"] || "")}</span>
+            </div>
+            <div class="product-actions">
+              <button class="spec-btn" onclick="event.stopPropagation(); toggleDesc(this)">مواصفات المنتج</button>
+              <button class="spec-btn order-btn" ${isOutOfStock ? 'disabled style="background:#ccc; border-color:#ccc;"' : ''} onclick="event.stopPropagation(); addToCart({name: '${(item["الاسم"]||"").replace(/'/g,"\\'")}', price: '${(item["السعر"]||"").replace(/'/g,"\\'")}'})">🛒 أضف إلى السلة</button>
+            </div>
+            <div class="desc" style="display:none; margin-top:8px; color:#555; background:#fce4ec; padding:10px; border-radius:8px; font-size:12px; text-align:right;  word-wrap: break-word; ">
+              ${item["الوصف"] || "لا توجد مواصفات مدونة حالياً لهذا المنتج."}
+            </div>
+            ${starsHtml}
+          </div>`;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleDesc(btn) {
+      const desc = btn.parentElement.parentElement.querySelector('.desc');
+      if(desc.style.display === "none" || desc.style.display === "") {
+        desc.style.display = "block";
+        btn.textContent = "إخفاء المواصفات";
+      } else {
+        desc.style.display = "none";
+        btn.textContent = "مواصفات المنتج";
+      }
+    }
+
+    // معالجة وتحويل روابط الـ Google Drive إلى روابط عرض مباشرة وثابتة
+    function getDirectImageUrl(url) {
+      if (!url) return "";
+      if (url.includes("drive.google.com")) {
+        let id = "";
+        if (url.includes("/file/d/")) { id = url.split("/file/d/")[1].split("/")[0]; }
+        else if (url.includes("open?id=")) { id = url.split("open?id=")[1].split("&")[0]; }
+        if (id) return `https://drive.google.com/uc?export=view&id=${id}`;
+      }
+      return url;
+    }
+
+    // محرك البحث الفوري عن المنتجات والأقسام
+    function searchProducts() {
+      selectedCategory = null;
+      selectedSubcategory = null;
+      document.getElementById("dropdown").classList.add("hide");
+      
+      let search = document.getElementById("searchInput").value.trim().toLowerCase();
+      let filtered = ALL_PRODUCTS;
+
+      if (search) {
+        filtered = filtered.filter(p =>
+          ((p["الاسم"] || "").toLowerCase().includes(search)) ||
+          ((p["القسم"] || "").toLowerCase().includes(search)) ||
+          ((p["القسم الفرعي"] || "").toLowerCase().includes(search)) ||
+          ((p["الوصف"] || "").toLowerCase().includes(search)) ||
+          ((p["شارة"] || "").toLowerCase().includes(search))
+        );
+      }
+      renderProducts(filtered);
+    }
+function handleInput() {
+    const input = document.getElementById("searchInput");
+    const clearBtn = document.getElementById("clearSearchBtn");
+    
+    // يظهر زر المسح فقط إذا كان هناك نص مكتوب
+    clearBtn.style.display = input.value.length > 0 ? "block" : "none";
+    
+    searchProducts(); // تنفيذ عملية البحث
+  }
+
+  function clearSearch() {
+    const input = document.getElementById("searchInput");
+    input.value = "";
+    document.getElementById("clearSearchBtn").style.display = "none";
+    searchProducts(); // تحديث النتائج لتظهر الكل
+  }
+    // ==========================================================================
+    // 9. إدارة عربة التسوق وسلة المشتريات (Cart Mechanism) - الدفعة التاسعة والعاشرة
+    // ==========================================================================
+    function addToCart(product) {
+      let idx = cart.findIndex(p => p.name === product.name && p.price === product.price);
+      if(idx > -1) {
+        cart[idx].qty += 1;
+      } else {
+        product.qty = 1;
+        cart.push(product);
+      }
+      updateCartCount();
+      showToastMsg("تمت إضافة المنتج إلى السلة بنجاح!");
+    }
+
+    function updateCartCount() {
+      let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      let footerCount = document.getElementById("cartCountFooter");
+      if(footerCount) footerCount.textContent = totalQty;
+    }
+
+    function showCart() {
+      if (cart.length === 0) {
+        alert("سلة المشتريات فارغة حالياً، تصفحي المتجر وأضيفي بعض المنتجات! 🛒");
+        return;
+      }
+      let itemsHtml = cart.map((item, i) => {
+        let actions = item.qty === 1 ? `
+          <button class="cart-action-btn" onclick="changeQty(${i}, 1)">+</button>
+          <span style="font-weight:bold; font-size:14px;">${item.qty}</span>
+          <button class="cart-action-btn" onclick="confirmRemove(${i})" style="color:red;">×</button>` : `
+          <button class="cart-action-btn" onclick="changeQty(${i}, -1)">-</button>
+          <span style="font-weight:bold; font-size:14px;">${item.qty}</span>
+          <button class="cart-action-btn" onclick="changeQty(${i}, 1)">+</button>`;
+        
+        let priceNum = Number(item.price.replace(/[^\d]/g, '')) || 0;
+        return `
+          <li class="cart-item-row">
+            <span style="font-size:13px; font-weight:bold; max-width:55%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.name}</span>
+            <div class="cart-actions">${actions}</div>
+            <span style="font-size:13px; color:var(--brand-dark); font-weight:bold;">${(priceNum * item.qty).toLocaleString()} د.ع</span>
+          </li>`;
+      }).join('');
+      
+      document.getElementById("cartItems").innerHTML = itemsHtml;
+
+      // حساب الأسعار الإجمالية وسياسة التوصيل المجاني (25 ألف عراقي)
+      let total = cart.reduce((sum, item) => {
+        let priceNum = Number(item.price.replace(/[^\d]/g, '')) || 0;
+        return sum + (priceNum * item.qty);
+      }, 0);
+      
+      let shipping = total >= 25000 ? 0 : 2000;
+      let shippingText = shipping === 0 ? '<span style="color:#43a047; font-weight:bold;">مجاني 🚚</span>' : shipping.toLocaleString() + ' د.ع';
+      let freeMsg = total >= 25000 ? 
+        `<div style="background:#e8f5e9; color:#388e3c; border-radius:8px; padding:6px; font-size:12px; margin-top:8px; text-align:center; font-weight:bold;">🎉 مبروك! حصلتِ على شحن مجاني لكافة مناطق العراق!</div>` : 
+        `<div style="color:#d81b60; font-size:12px; margin-top:6px; text-align:center;">🚚 أضيفي منتجات بقيمة <b>${(25000 - total).toLocaleString()} د.ع</b> إضافية واحصلي على شحن مجاني!</div>`;
+
+      document.getElementById("cartSummary").innerHTML = `
+        <div class="cart-summary-box">
+          <div class="summary-row"><span>المجموع الفرعي:</span><span>${total.toLocaleString()} د.ع</span></div>
+          <div class="summary-row"><span>أجور التوصيل:</span><span>${shippingText}</span></div>
+          <div class="summary-row total"><span>الإجمالي الكلي:</span><span>${(total + shipping).toLocaleString()} د.ع</span></div>
+          ${freeMsg}
+        </div>`;
+        
+      showModal("cartModal");
+    }
+
+    function changeQty(index, delta) {
+      cart[index].qty += delta;
+      if(cart[index].qty < 1) cart[index].qty = 1;
+      updateCartCount();
+      showCart();
+    }
+
+    function confirmRemove(index) {
+      if(confirm("هل تودين حذف هذا المنتج من سلتكِ؟")) {
+        cart.splice(index, 1);
+        updateCartCount();
+        if(cart.length === 0) closeModal("cartModal");
+        else showCart();
+      }
+    }
+
+    function clearCart() {
+      if (confirm("هل أنتِ متأكدة من رغبتكِ في تفريغ السلة بالكامل؟")) {
+        cart = [];
+        updateCartCount();
+        closeModal("cartModal");
+      }
+    }
+
+    // إرسال الطلبات إلى السيرفر وحفظها بجدول شيت جوجل ثم التوجيه للواتساب
+    function submitCartOrder() {
+      const name = document.getElementById("custName").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const location = document.getElementById("custLocation").value.trim();
+      
+      if (!name || !address || !phone) {
+        alert("يرجى تعبئة حقول الاسم الكامل، العنوان بالتفصيل، ورقم الهاتف لإكمال طلبكِ بنجاح.");
+        return;
+      }
+      
+      localStorage.setItem("custName", name);
+      localStorage.setItem("custAddress", address);
+      localStorage.setItem("custPhone", phone);
+      localStorage.setItem("custLocation", location);
+
+      let productsStr = cart.map((item, i) => `${i+1}- ${item.name} [الكمية: ${item.qty}]`).join('\n');
+      let total = cart.reduce((sum, item) => sum + ((Number(item.price.replace(/[^\d]/g, '')) || 0) * item.qty), 0);
+      let shipping = total >= 25000 ? 0 : 2000;
+      let totalStr = `${(total + shipping).toLocaleString()} دينار عراقي`;
+      let dateStr = new Date().toLocaleString('ar-EG');
+
+      // رابط الـ API الموثق عبر Sheety لحفظ بيانات العميل والطلب تلقائياً
+      let sheetyUrl = 'https://api.sheety.co/bc3282897db7d467bcd4bfe1d47afeeb/معلومات الزبون/الورقة1';
+      let requestBody = {
+        "الورقة1": {
+          "الاسم": name,
+          "العنوان": address,
+          "الهاتف": phone,
+          "المنتجات": productsStr,
+          "السعر الاجمالي": totalStr,
+          "التاريخ": dateStr
+        }
+      };
+
+      fetch(sheetyUrl, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody)
+      })
+      .then(response => response.json())
+      .then(() => {
+        // بعد التوثيق بنجاح في الجدول، ننتقل فوراً لفتح محادثة الواتساب
+        let msg = `🌟 طلب شراء جديد من متجر كوزمتك علي حنوش 🌟\n\n📌 *تفاصيل الزبون:*\n👤 الاسم: ${name}\n📍 العنوان: ${address}\n📞 الهاتف: ${phone}`;
+        if(location) msg += `\n🗺️ لوكيشن الخرائط: ${location}`;
+        msg += `\n\n📦 *المنتجات المطلوبة:*\n${productsStr}\n\n💰 *الحساب الإجمالي الكلي:* ${totalStr}\n\n✨ شكراً لتسوقكِ معنا!`;
+
+        const encodedText = encodeURIComponent(msg);
+        window.open(`https://wa.me/9647818004585?text=${encodedText}`, '_blank');
+        
+        cart = [];
+        updateCartCount();
+        closeModal("cartModal");
+        showToastMsg("✅ تم تسجيل وإرسال طلبكِ بنجاح!");
+      })
+      .catch(error => {
+        showToastMsg("عذراً، فشل الاتصال بخادم الحفظ: " + error.message, "error");
+      });
+    }
+
+    // ==========================================================================
+    // 10. محرك وميكانيكية تحريك السلايدر (Carousel & Touch Animation) - الدفعة 11 و 12
+    // ==========================================================================
+	
+	function initCarousel() {
+    const slides = document.querySelectorAll(".carousel-slide");
+    const inner = document.getElementById("carousel-inner");
+	console.log("Slides found:", slides.length);
+
+    if (!inner || !slides.length) return;
+
+    createCarouselDots(slides.length);
+	slides.forEach((slide, i) => {
+    slide.style.display = i === 0 ? "block" : "none";
+});
+    showSlide(0);
+
+    stopSlideTimer();
+    startSlideTimer();
+
+    const carouselContainer = document.getElementById("image-carousel");
+
+    carouselContainer.addEventListener("mouseenter", stopSlideTimer);
+    carouselContainer.addEventListener("mouseleave", startSlideTimer);
+
+    let startX = 0;
+
+    inner.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+        stopSlideTimer();
+    }, { passive: true });
+
+    inner.addEventListener("touchend", (e) => {
+        const endX = e.changedTouches[0].clientX;
+
+        if (startX - endX > 50) nextImage();
+        else if (endX - startX > 50) prevImage();
+
+        stopSlideTimer();
+        startSlideTimer();
+    }, { passive: true });
+}
+    function createCarouselDots(count) {
+      const dotsContainer = document.getElementById("carousel-dots");
+      if(!dotsContainer) return;
+      dotsContainer.innerHTML = "";
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement("span");
+        dot.className = "dot" + (i === 0 ? " active" : "");
+        dot.addEventListener("click", () => showSlide(i));
+        dotsContainer.appendChild(dot);
+      }
+    }
+	
+	function showSlide(index) {
+    const slides = document.querySelectorAll(".carousel-slide");
+    const dots = document.querySelectorAll(".dot");
+
+    if (!slides.length) return;
+
+    currentSlide = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+        slide.style.display = i === currentSlide ? "block" : "none";
+    });
+
+    dots.forEach((d, idx) => {
+        d.classList.toggle("active", idx === currentSlide);
+    });
+}
+
+function nextImage() {
+    console.log("NEXT CLICKED");
+    showSlide(currentSlide + 1);
+}    function prevImage() { showSlide(currentSlide - 1); }
+    function startSlideTimer() { slideInterval = setInterval(nextImage, 4000); }
+    function stopSlideTimer() { clearInterval(slideInterval); }
+
+    // ==========================================================================
+    // 11. إدارة شاشات العرض والنوافذ المنبثقة والقوائم الجانبية والمفضلة والتقييمات
+    // ==========================================================================
+    function showModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = "flex";
+      setTimeout(() => modal.classList.add("open"), 10);
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove("open");
+      setTimeout(() => { modal.style.display = "none"; }, 400);
+    }
+
+    function openFullImage(src) {
+      if(!src) return;
+      document.getElementById('fullImg').src = src;
+      showModal('fullImgModal');
+    }
+
+    // فتح وإغلاق القائمة الجانبية للتطبيقات (Sidebar)
+    document.getElementById('appsBtn').onclick = function(e) {
+      e.stopPropagation();
+      if (sidebarOpen) closeSidebar();
+      else openSidebar();
+    };
+
+    function openSidebar() {
+      sidebarOpen = true;
+      const sb = document.getElementById('sidebar');
+      sb.style.width = '260px';
+    }
+    function closeSidebar() {
+      sidebarOpen = false;
+      document.getElementById('sidebar').style.width = '0';
+    }
+
+    // رسم محتوى وأقسام القائمة الجانبية
+    function renderSidebarCategories() {
+      setTimeout(() => {
+        const content = document.getElementById('sidebarContent');
+        if(!content) return;
+        let html = '<h3 style="color:var(--brand-dark); padding:10px 0; border-bottom:2px solid var(--brand-light); margin-bottom:10px;">أقسام المتجر الإضافية</h3>';
+        
+        CATEGORIES.forEach((cat, idx) => {
+          if(cat.type === "section") {
+html += `
+<div
+style="
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px;
+border-bottom:1px solid #f3f3f3;
+cursor:pointer;
+transition:.2s;
+"
+onclick="selectSidebarCat(${idx})">
+
+<img
+src="${CATEGORY_ICONS[cat.name] || 'assest/icons/makeup.png'}"
+style="
+width:40px;
+height:40px;
+object-fit:contain;
+">
+
+<span style="
+font-weight:bold;
+color:#333;
+font-size:14px;
+">
+${cat.name}
+</span>
+
+</div>
+`;          }
+        });
+        content.innerHTML = html;
+      }, 500);
+    }
+
+    function selectSidebarCat(idx) {
+      toggleCategory(idx);
+      closeSidebar();
+      window.scrollTo({top: document.getElementById("marqueeWrapper").offsetTop - 20, behavior: 'smooth'});
+    }
+
+    // التحكم بقائمة خيارات "علي حنوش" بالأسفل
+    function toggleAboutDropdown(e) {
+      e.stopPropagation();
+      const dd = document.getElementById("aboutDropdown");
+      dd.style.display = dd.style.display === "flex" ? "none" : "flex";
+    }
+    function closeAboutDropdown() { document.getElementById("aboutDropdown").style.display = "none"; }
+
+    // التحكم التلقائي وإغلاق النوافذ عند النقر على المساحات الفارغة بالخارج
+    document.addEventListener("mousedown", function(e) {
+      // إغلاق قائمة الفوتر
+      const dd = document.getElementById("aboutDropdown");
+      if(dd && dd.style.display === "flex" && !dd.contains(e.target) && e.target.id !== 'aboutBtn') {
+        dd.style.display = "none";
+      }
+      // إغلاق السايدبار
+      const sb = document.getElementById('sidebar');
+      if(sidebarOpen && sb && !sb.contains(e.target) && e.target.id !== 'appsBtn' && !document.getElementById('appsBtn').contains(e.target)) {
+        closeSidebar();
+      }
+      // إغلاق المودالات المفتوحة تلقائياً بالخارج عدا نافذة السلة تفادياً لفقد البيانات المدونة بالخطأ
+      document.querySelectorAll(".modal").forEach(modal => {
+        if(modal.classList.contains("open") && modal.id !== "cartModal") {
+          if(!modal.querySelector(".modal-content").contains(e.target)) {
+            closeModal(modal.id);
+          }
+        }
+      });
+    });
+
+    // تبديل وتفعيل أزرار شريط التنقل السفلي والرجوع للصفحة الرئيسية
+    document.getElementById("homeBtn").addEventListener("click", function() {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      selectedCategory = null;
+      selectedSubcategory = null;
+      document.getElementById("dropdown").classList.add("hide");
+      document.getElementById("health-banner").classList.remove("hide");
+      document.getElementById("image-carousel").classList.remove("hide");
+      document.getElementById("marqueeWrapper").classList.remove("hide");
+      document.getElementById("searchInput").value = "";
+      renderProducts();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    document.getElementById("favBtn").addEventListener("click", function() {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      document.getElementById("dropdown").classList.add("hide");
+      document.getElementById("health-banner").classList.add("hide");
+      document.getElementById("image-carousel").classList.add("hide");
+      document.getElementById("marqueeWrapper").classList.add("hide");
+      showWishlist();
+    });
+
+    document.getElementById("healthTestBtn").onclick = function() { window.open('https://docs.google.com/forms/d/e/1FAIpQLSeS3l-H6kbnxklUnW7cpr_ktwIE_f8yxPSQhtPAu7rNlpwTUQ/viewform', '_blank'); };
+
+    // إدارة قائمة المفضلة المحلية (Wishlist Storage)
+    function showWishlist() {
+      let list = getWishlist();
+      let favProducts = ALL_PRODUCTS.filter(item => list.includes(item["الاسم"]));
+      renderProducts(favProducts, true);
+    }
+    function getWishlist() { return JSON.parse(localStorage.getItem("wishlist") || "[]"); }
+    function saveWishlist(list) { localStorage.setItem("wishlist", JSON.stringify(list)); }
+    
+    function toggleFavorite(productName) {
+      let list = getWishlist();
+      if(list.includes(productName)) {
+        list = list.filter(n => n !== productName);
+      } else {
+        list.push(productName);
+      }
+      saveWishlist(list);
+      // إعادة رسم وتحديث الأيقونات التفاعلية الحالية
+      if(document.getElementById("favBtn").classList.contains("active")) showWishlist();
+      else renderProducts();
+    }
+
+    // إدارة تقييمات المنتجات بالنجوم المحلية
+    function getProductRating(productName) {
+      let ratings = JSON.parse(localStorage.getItem("ratings") || "{}");
+      return ratings[productName] || 0;
+    }
+    function rateProduct(productName, stars) {
+      let ratings = JSON.parse(localStorage.getItem("ratings") || "{}");
+      ratings[productName] = stars;
+      localStorage.setItem("ratings", JSON.stringify(ratings));
+      if(document.getElementById("favBtn").classList.contains("active")) showWishlist();
+      else renderProducts();
+    }
+
+    // دالة إطلاق إشعارات الـ Toast السريعة والمصممة بجمالية متناسقة
+    function showToastMsg(txt, type = "success") {
+      const toast = document.getElementById("toast");
+      toast.textContent = txt;
+      toast.style.background = (type === "success") ? "#4caf50" : "#e53935";
+      toast.style.display = "block";
+      toast.style.opacity = 0;
+      toast.style.transition = "opacity 0.4s ease";
+      setTimeout(() => { toast.style.opacity = 1; }, 50);
+      setTimeout(() => {
+        toast.style.opacity = 0;
+        setTimeout(() => { toast.style.display = "none"; }, 400);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
