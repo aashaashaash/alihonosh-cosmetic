@@ -181,83 +181,87 @@ button:hover{
 document.getElementById("image").addEventListener("input",function(){
     document.getElementById("previewImg").src=this.value;
 });
-const categories = {
-  "عناية بالبشرة": [
-    "كريمات",
-    "سيروم",
-    "ماسكات",
-    "غسول"
-  ],
+let allProducts = [];
 
-  "عناية بالشعر": [
-    "شامبو",
-    "بلسم",
-    "زيوت",
-    "صابون وجه"
-  ],
+async function loadCategories() {
 
-  "مكياج": [
-    "شفاه",
-    "عيون",
-    "وجه"
-  ],
+  const response = await fetch(
+    "https://opensheet.vercel.app/1Zn2TakHVmDIEc45EHBoSygIMhBqoxq-91arajm5Pu1k/sheet1"
+  );
 
-  "عطور": [
-    "نسائي",
-    "رجالي"
-  ]
-};
+  allProducts = await response.json();
 
-const badges = [
-  "",
-  "جديد",
-  "الأكثر مبيعاً",
-  "عرض",
-  "عضوي",
-  "محدود",
-  "هدية"
-];
+  const categories = [
+    ...new Set(
+      allProducts
+        .map(p => (p["القسم"] || "").trim())
+        .filter(x => x)
+    )
+  ];
 
-function fillDropdowns(){
+  const cat = document.getElementById("category");
+  cat.innerHTML = "";
 
-  const cat=document.getElementById("category");
-  const sub=document.getElementById("subcategory");
-  const badge=document.getElementById("badge");
-
-  cat.innerHTML="";
-  badge.innerHTML="";
-
-  Object.keys(categories).forEach(c=>{
-      cat.innerHTML += `<option value="${c}">${c}</option>`;
-  });
-
-  badges.forEach(b=>{
-      badge.innerHTML += `<option value="${b}">${b}</option>`;
+  categories.forEach(c => {
+    cat.innerHTML += `<option value="${c}">${c}</option>`;
   });
 
   loadSubcategories();
+  loadBadges();
 }
 
-function loadSubcategories(){
+function loadSubcategories() {
 
-  const cat=document.getElementById("category").value;
-  const sub=document.getElementById("subcategory");
+  const selectedCategory =
+    document.getElementById("category").value;
 
-  sub.innerHTML="";
+  const sub = document.getElementById("subcategory");
 
-  categories[cat].forEach(s=>{
-      sub.innerHTML += `<option value="${s}">${s}</option>`;
+  sub.innerHTML = "";
+
+  const subcategories = [
+    ...new Set(
+      allProducts
+        .filter(p =>
+          (p["القسم"] || "").trim() === selectedCategory
+        )
+        .map(p => (p["القسم الفرعي"] || "").trim())
+        .filter(x => x)
+    )
+  ];
+
+  subcategories.forEach(s => {
+    sub.innerHTML += `<option value="${s}">${s}</option>`;
   });
-
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
+function loadBadges() {
 
-   fillDropdowns();
+  const badge = document.getElementById("badge");
 
-   document
-      .getElementById("category")
-      .addEventListener("change",loadSubcategories);
+  badge.innerHTML = "";
+
+  const badges = [
+    "",
+    ...new Set(
+      allProducts
+        .map(p => (p["شارة"] || "").trim())
+        .filter(x => x)
+    )
+  ];
+
+  badges.forEach(b => {
+    badge.innerHTML += `<option value="${b}">${b}</option>`;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  await loadCategories();
+
+  document
+    .getElementById("category")
+    .addEventListener("change", loadSubcategories);
 
 });
 function saveProduct(){
