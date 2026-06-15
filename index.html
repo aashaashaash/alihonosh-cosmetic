@@ -1303,6 +1303,7 @@ const isOutOfStock = item["نفاذ"]?.trim() === "نعم";
 
         let url = item["الصورة"] ? item["الصورة"].trim() : "";
         url = getDirectImageUrl(url);
+		  console.log("Image URL:", url);
 
         // التحكم الذكي في الميديا وعرض الصور والفيديو بدقة
         let mediaHtml = "";
@@ -1369,17 +1370,33 @@ const isOutOfStock = item["نفاذ"]?.trim() === "نعم";
     }
 
     // معالجة وتحويل روابط الـ Google Drive إلى روابط عرض مباشرة وثابتة
-    function getDirectImageUrl(url) {
-      if (!url) return "";
-      if (url.includes("drive.google.com")) {
-        let id = "";
-        if (url.includes("/file/d/")) { id = url.split("/file/d/")[1].split("/")[0]; }
-        else if (url.includes("open?id=")) { id = url.split("open?id=")[1].split("&")[0]; }
-        if (id) return `https://drive.google.com/uc?export=view&id=${id}`;
-      }
-      return url;
+  function getDirectImageUrl(url) {
+
+  if (!url) return "";
+
+  if (url.includes("drive.google.com")) {
+
+    let id = "";
+
+    if (url.includes("/file/d/")) {
+      id = url.split("/file/d/")[1].split("/")[0];
     }
 
+    else if (url.includes("open?id=")) {
+      id = url.split("open?id=")[1].split("&")[0];
+    }
+
+    else if (url.includes("id=")) {
+      id = url.split("id=")[1].split("&")[0];
+    }
+
+    if (id) {
+      return `https://drive.google.com/uc?export=view&id=${id}`;
+    }
+  }
+
+  return url;
+}
     // محرك البحث الفوري عن المنتجات والأقسام
     function searchProducts() {
       selectedCategory = null;
@@ -1550,7 +1567,7 @@ function handleInput() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody)
       })
-      .then(response => response.json())
+      .then(=> response.json())
       .then(() => {
         // بعد التوثيق بنجاح في الجدول، ننتقل فوراً لفتح محادثة الواتساب
         let msg = `🌟 طلب شراء جديد من متجر كوزمتك علي حنوش 🌟\n\n📌 *تفاصيل الزبون:*\n👤 الاسم: ${name}\n📍 العنوان: ${address}\n📞 الهاتف: ${phone}`;
