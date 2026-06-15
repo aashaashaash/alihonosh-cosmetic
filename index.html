@@ -1567,7 +1567,7 @@ function handleInput() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody)
       })
-      .then(=> response.json())
+     .then(response => response.json())
       .then(() => {
         // بعد التوثيق بنجاح في الجدول، ننتقل فوراً لفتح محادثة الواتساب
         let msg = `🌟 طلب شراء جديد من متجر كوزمتك علي حنوش 🌟\n\n📌 *تفاصيل الزبون:*\n👤 الاسم: ${name}\n📍 العنوان: ${address}\n📞 الهاتف: ${phone}`;
