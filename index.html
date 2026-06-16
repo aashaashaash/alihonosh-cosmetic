@@ -1111,50 +1111,101 @@ box-shadow:0 8px 30px rgba(216,27,96,.25);}
     initCarousel();
 });
 
-    // جلب البيانات وبناء القوائم آلياً
-    function fetchLiveData() {
+  function fetchLiveData() {
+
+Promise.all([
+
 fetch("https://opensheet.vercel.app/1Zn2TakHVmDIEc45EHBoSygIMhBqoxq-91arajm5Pu1k/sheet1")
-	.then(res => res.json())
-        .then(data => {
-          ALL_PRODUCTS = data;
+.then(res => res.json()),
 
-          // بناء قائمة الشارات (badges) من الشيت مباشرة
-          const badges = Array.from(new Set(
-            data.map(p => (p["شارة"]||"").trim()).filter(b => b !== "")
-          )).map(name => ({
-            name,
-            icon: CATEGORY_ICONS[name] || "",
-            subs: [],
-            type: "badge"
-          }));
+fetch("https://opensheet.vercel.app/1Zn2TakHVmDIEc45EHBoSygIMhBqoxq-91arajm5Pu1k/Categories")
+.then(res => res.json())
 
-          // بناء قائمة الأقسام الرئيسية
-          const sectionsMap = {};
-          data.forEach(p => {
-            const cat = (p["القسم"]||"").trim();
-            const sub = (p["القسم الفرعي"]||"").trim();
-            if (!cat) return;
-            if (!sectionsMap[cat]) sectionsMap[cat] = new Set();
-            if (sub) sectionsMap[cat].add(sub);
-          });
+])
 
-          const sections = Object.entries(sectionsMap).map(([name, subsSet]) => ({
-            name,
-            icon: CATEGORY_ICONS[name] || "",
-            subs: Array.from(subsSet),
-            type: "section"
-          }));
+.then(([products,categories]) => {
 
-          // الدمج النهائي للأقسام
-          CATEGORIES = [...badges, ...sections];
+  ALL_PRODUCTS = products;
 
-          // الرسم الحي للواجهة
-          renderMarqueeCategories();
-          renderSidebarCategories();
-          renderProducts();
-        })
-        .catch(err => console.error("خطأ أثناء الاتصال بقاعدة البيانات الحية:", err));
+  // الشارات من المنتجات
+
+  const badges = Array.from(
+    new Set(
+      products
+      .map(p => (p["شارة"] || "").trim())
+      .filter(Boolean)
+    )
+  ).map(name => ({
+
+    name,
+    icon: CATEGORY_ICONS[name] || "",
+    subs: [],
+    type: "badge"
+
+  }));
+
+
+  // الأقسام من ورقة Categories
+
+  const sectionsMap = {};
+
+  categories.forEach(row => {
+
+    const cat =
+      (row["القسم"] || "").trim();
+
+    const sub =
+      (row["القسم الفرعي"] || "").trim();
+
+    if(!cat) return;
+
+    if(!sectionsMap[cat]){
+      sectionsMap[cat] = [];
     }
+
+    if(
+      sub &&
+      !sectionsMap[cat].includes(sub)
+    ){
+      sectionsMap[cat].push(sub);
+    }
+
+  });
+
+
+  const sections =
+    Object.entries(sectionsMap)
+    .map(([name,subs]) => ({
+
+      name,
+      icon: CATEGORY_ICONS[name] || "",
+      subs,
+      type:"section"
+
+    }));
+
+
+  CATEGORIES = [
+    ...badges,
+    ...sections
+  ];
+
+  renderMarqueeCategories();
+  renderSidebarCategories();
+  renderProducts();
+
+})
+
+.catch(err => {
+
+  console.error(
+    "خطأ أثناء جلب البيانات:",
+    err
+  );
+
+});
+
+}
 
     // رسم شريط الفئات المتحرك بشكل لانهائي وبدون فراغات ميتة
     function renderMarqueeCategories() {
