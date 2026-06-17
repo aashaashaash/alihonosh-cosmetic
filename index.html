@@ -1098,6 +1098,7 @@ box-shadow:0 8px 30px rgba(216,27,96,.25);}
   "عضوي": "assest/icons/organic.png"
 
 };
+	  let BADGES_IMAGES = {};
 
     // التحميل الأول واستعادة البيانات المستمرة من المستعرض
     window.addEventListener("DOMContentLoaded", () => {
@@ -1109,6 +1110,7 @@ box-shadow:0 8px 30px rgba(216,27,96,.25);}
       // جلب وبناء قواعد البيانات الحية
     fetchLiveData();
     initCarousel();
+		loadBannerImages();
 });
 
   function fetchLiveData() {
@@ -1719,7 +1721,80 @@ function nextImage() {
     // ==========================================================================
     // 11. إدارة شاشات العرض والنوافذ المنبثقة والقوائم الجانبية والمفضلة والتقييمات
     // ==========================================================================
-    function showModal(id) {
+    function loadBannerImages(){
+
+fetch(
+"https://opensheet.vercel.app/1Zn2TakHVmDIEc45EHBoSygIMhBqoxq-91arajm5Pu1k/Badges"
+)
+
+.then(r => r.json())
+
+.then(data => {
+
+  const banners = {
+
+    "منتجات طبية": document.querySelector(
+      "button[onclick=\"filterByMainCategory('منتجات طبية')\"] img"
+    ),
+
+    "مقاوم للماء": document.querySelector(
+      "button[onclick=\"filterByMainCategory('مقاوم للماء')\"] img"
+    ),
+
+    "عضوي": document.querySelector(
+      "button[onclick=\"filterByMainCategory('عضوي')\"] img"
+    ),
+
+    "اصدار محدود": document.querySelector(
+      "button[onclick=\"filterByMainCategory('اصدار محدود')\"] img"
+    ),
+
+    "روتين": document.querySelector(
+      "button[onclick=\"filterByMainCategory('روتين')\"] img"
+    ),
+
+    "عرض خاص": document.querySelector(
+      "button[onclick=\"filterByMainCategory('عرض خاص')\"] img"
+    ),
+
+    "الأكثر مبيعا": document.querySelector(
+      "button[onclick=\"filterByMainCategory('الأكثر مبيعا')\"] img"
+    )
+
+  };
+
+  data.forEach(row => {
+
+    const badge =
+      (row["الشارة"] || "").trim();
+
+    const image =
+      (row["الصورة"] || "").trim();
+
+    if(
+      banners[badge] &&
+      image
+    ){
+
+      banners[badge].src = image;
+
+    }
+
+  });
+
+})
+
+.catch(err => {
+
+  console.log(
+    "خطأ تحميل البنرات",
+    err
+  );
+
+});
+
+}
+	  function showModal(id) {
       const modal = document.getElementById(id);
       if (!modal) return;
       modal.style.display = "flex";
