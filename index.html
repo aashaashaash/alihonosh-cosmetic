@@ -1994,5 +1994,33 @@ ${cat.name}
       }, 3000);
     }
   </script>
+	document.getElementById("backBtn").addEventListener(
+  "click",
+  function () {
+
+    selectedSubcategory = null;
+    selectedCategory = null;
+
+    document.getElementById("dropdown")
+      .classList.add("hide");
+
+    document.getElementById("health-banner")
+      .classList.remove("hide");
+
+    document.getElementById("image-carousel")
+      .classList.remove("hide");
+
+    document.getElementById("marqueeWrapper")
+      .classList.remove("hide");
+
+    renderProducts();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+);
 </body>
 </html>
