@@ -808,9 +808,14 @@ box-shadow:0 8px 30px rgba(216,27,96,.25);}
         <img src="assest/banner/logo_transparent.png?v=1" alt="كوزمتك علي حنوش">
     </div>
 
-    <button id="backBtn" class="top-btn" aria-label="رجوع">
-        <i class="fa-solid fa-arrow-right"></i>
-    </button>
+   <button
+ id="backBtn"
+ class="top-btn"
+ onclick="history.back()">
+
+ <i class="fa-solid fa-arrow-right"></i>
+
+</button>
 
 </div>
   <div class="main-header">  
@@ -1988,14 +1993,7 @@ ${cat.name}
         setTimeout(() => { toast.style.display = "none"; }, 400);
       }, 3000);
     }
-	  document.getElementById("backBtn").addEventListener(
-  "click",
-  function () {
-
-    history.back();
-
-  }
-);
+	
   </script>
 </body>
 </html>
