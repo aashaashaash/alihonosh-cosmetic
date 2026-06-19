@@ -1340,44 +1340,8 @@ fetch("https://opensheet.vercel.app/1Zn2TakHVmDIEc45EHBoSygIMhBqoxq-91arajm5Pu1k
         container.innerHTML += "<div style='grid-column: 1/-1; text-align:center; color:var(--brand); padding:40px; font-size:1.1em;'>لا توجد منتجات متوفرة حالياً في هذا القسم.</div>";
         return;
       }
-if(selectedProduct){
 
-container.innerHTML += `
-<div style="
-grid-column:1/-1;
-text-align:center;
-margin-bottom:20px;
-">
-
-<button
-onclick="
-selectedProduct=null;
-renderProducts();
-"
-style="
-background:#d81b60;
-color:white;
-border:none;
-padding:10px 20px;
-border-radius:10px;
-cursor:pointer;
-margin-bottom:10px;
-">
-⬅ الرجوع للمتجر
-</button>
-
-<div style="
-font-size:22px;
-font-weight:bold;
-color:#d81b60;
-">
-💖 منتجات مشابهة قد تعجبك
-</div>
-
-</div>
-`;
-}
-	
+	let index = 0;
       filtered.forEach(item => {
        const card = document.createElement("div");
 		  card.className = "product";
@@ -1471,6 +1435,48 @@ ${mediaHtml}
 
 	
         container.appendChild(card);
+		  if(selectedProduct && index === 0){
+
+  const title = document.createElement("div");
+
+  title.style.gridColumn = "1 / -1";
+
+  title.innerHTML = `
+    <div style="text-align:center;margin:15px 0;">
+
+      <button
+      onclick="
+      selectedProduct=null;
+      renderProducts();
+      "
+      style="
+      background:#d81b60;
+      color:white;
+      border:none;
+      padding:10px 20px;
+      border-radius:10px;
+      cursor:pointer;
+      margin-bottom:10px;
+      ">
+      ⬅ الرجوع للمتجر
+      </button>
+
+      <div style="
+      font-size:22px;
+      font-weight:bold;
+      color:#d81b60;
+      ">
+      💖 منتجات مشابهة قد تعجبك
+      </div>
+
+    </div>
+  `;
+
+  container.appendChild(title);
+
+}
+
+index++;
       });
     }
 
