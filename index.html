@@ -1511,11 +1511,11 @@ function showProductDetails(product){
 
   // المنتج المختار
   renderProducts([product]);
-
+const selectedCard =
+container.innerHTML;
   // عنوان المنتجات المشابهة
 
   const title = document.createElement("div");
-
   title.innerHTML = `
   <button
   onclick="
@@ -1544,21 +1544,15 @@ function showProductDetails(product){
   💖 منتجات مشابهة قد تعجبك
   </div>
   `;
-
+title.style.gridColumn = "1 / -1";
+title.style.width = "100%";
   container.appendChild(title);
 
   // المنتجات المشابهة
 
-related.slice(0,6).forEach(item=>{
-    const card = document.createElement("div");
-
-    card.className = "product";
-
-    card.onclick = function(){
-
-      showProductDetails(item);
-
-    };
+renderProducts(
+  related.slice(0,4)
+);
 
     let url =
       item["الصورة"] || "";
