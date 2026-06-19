@@ -1398,8 +1398,8 @@ if(fileType === "video"){
       object-fit:cover;
       border-radius:10px;
     ">
-    <source src="${url}">
-  </video>
+<source src="${url.replace("export=view","export=download")}">
+</video>
   `;
 
 }
