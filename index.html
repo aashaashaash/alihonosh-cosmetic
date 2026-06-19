@@ -1377,43 +1377,7 @@ color:#d81b60;
 </div>
 `;
 }
-		if(selectedProduct){
-
-container.innerHTML += `
-<div style="
-grid-column:1/-1;
-text-align:center;
-margin-bottom:20px;
-">
-
-<button
-onclick="
-selectedProduct=null;
-renderProducts();
-"
-style="
-background:#d81b60;
-color:white;
-border:none;
-padding:10px 20px;
-border-radius:10px;
-cursor:pointer;
-margin-bottom:10px;
-">
-⬅ الرجوع للمتجر
-</button>
-
-<div style="
-font-size:22px;
-font-weight:bold;
-color:#d81b60;
-">
-💖 منتجات مشابهة قد تعجبك
-</div>
-
-</div>
-`;
-}
+	
       filtered.forEach(item => {
        const card = document.createElement("div");
 		  card.className = "product";
