@@ -1055,6 +1055,7 @@ box-shadow:0 8px 30px rgba(216,27,96,.25);}
     let cart = [];
     let selectedCategory = null;
     let selectedSubcategory = null;
+	let selectedProduct = null;  
     let sidebarOpen = false;
     let sidebarSelectedCat = null;
     let currentSlide = 0;
@@ -1341,8 +1342,12 @@ fetch("https://opensheet.vercel.app/1Zn2TakHVmDIEc45EHBoSygIMhBqoxq-91arajm5Pu1k
       }
 
       filtered.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "product";
+       const card = document.createElement("div");
+		  card.className = "product";
+		  card.onclick = function(){
+			  showProductDetails(item);
+
+};
 const isOutOfStock = item["نفاذ"]?.trim() === "نعم";    
     if (isOutOfStock) card.classList.add("out-of-stock");
 
@@ -1396,7 +1401,8 @@ const isOutOfStock = item["نفاذ"]?.trim() === "نعم";
           <div class="product-header" style="height:110px; display:flex; justify-content:center; align-items:center; overflow:hidden; cursor:pointer;" onclick="openFullImage('${url}')">
             ${mediaHtml}
           </div>
-          ${isOutOfStock ? '<div class="out-of-stock-label">نفذت الكمية الحالية</div>' : ''}
+          ${isOutOfStock ? 
+			'<div class="out-of-stock-label">نفذت الكمية الحالية</div>' : ''}
           <div class="product-info" style="margin-top:8px;">
             <h2 class="product-title">${item["الاسم"] || "منتج بدون اسم"}</h2>
             <div class="product-price-row">
@@ -1410,8 +1416,11 @@ const isOutOfStock = item["نفاذ"]?.trim() === "نعم";
             <div class="desc" style="display:none; margin-top:8px; color:#555; background:#fce4ec; padding:10px; border-radius:8px; font-size:12px; text-align:right;  word-wrap: break-word; ">
               ${item["الوصف"] || "لا توجد مواصفات مدونة حالياً لهذا المنتج."}
             </div>
+			
             ${starsHtml}
           </div>`;
+
+	
         container.appendChild(card);
       });
     }
@@ -1426,7 +1435,133 @@ const isOutOfStock = item["نفاذ"]?.trim() === "نعم";
         btn.textContent = "مواصفات المنتج";
       }
     }
+function showProductDetails(product){
 
+  selectedProduct = product;
+
+  const related = [];
+
+  ALL_PRODUCTS.forEach(p=>{
+
+    if(p["ID"] === product["ID"])
+      return;
+
+    if(
+      (p["القسم الفرعي"] || "").trim() ===
+      (product["القسم الفرعي"] || "").trim()
+    ){
+      related.push(p);
+    }
+
+  });
+
+  ALL_PRODUCTS.forEach(p=>{
+
+    if(p["ID"] === product["ID"])
+      return;
+
+    if(
+      related.some(
+        x => x["ID"] === p["ID"]
+      )
+    ) return;
+
+    if(
+      (p["القسم"] || "").trim() ===
+      (product["القسم"] || "").trim()
+    ){
+      related.push(p);
+    }
+
+  });
+
+  ALL_PRODUCTS.forEach(p=>{
+
+    if(p["ID"] === product["ID"])
+      return;
+
+    if(
+      related.some(
+        x => x["ID"] === p["ID"]
+      )
+    ) return;
+
+    if(
+      (p["شارة"] || "").trim() ===
+      (product["شارة"] || "").trim()
+    ){
+      related.push(p);
+    }
+
+  });
+
+  renderProductWithRelated(
+    product,
+    related
+  );
+
+}
+	  function renderProductWithRelated(
+  product,
+  related
+){
+
+  const container =
+    document.getElementById(
+      "product-list"
+    );
+
+  container.innerHTML = "";
+
+  renderProducts(
+    [product]
+  );
+
+  container.innerHTML += `
+<button
+onclick="
+selectedProduct=null;
+renderProducts();
+"
+style="
+background:#d81b60;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:10px;
+cursor:pointer;
+margin-bottom:15px;
+">
+⬅ الرجوع للمتجر
+</button>
+    <div
+    style="
+    grid-column:1/-1;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    color:#d81b60;
+    margin:20px 0;
+    ">
+    💖 منتجات مشابهة قد تعجبك
+    </div>
+
+  `;
+
+  related.forEach(p=>{
+
+    const old =
+      ALL_PRODUCTS;
+
+    ALL_PRODUCTS = [p];
+
+    renderProducts();
+
+    ALL_PRODUCTS = old;
+
+  });
+
+}
     // معالجة وتحويل روابط الـ Google Drive إلى روابط عرض مباشرة وثابتة
 function getDirectImageUrl(url) {
 
@@ -2022,6 +2157,129 @@ ${cat.name}
 
   }
 );
+	  function renderRelatedProducts(product){
+
+const target =
+document.getElementById(
+`related-${product["ID"]}`
+);
+
+if(!target) return;
+
+const related = ALL_PRODUCTS.filter(p => {
+
+if(p["ID"] === product["ID"])
+return false;
+
+return (
+
+(p["القسم الفرعي"] || "")
+===
+(product["القسم الفرعي"] || "")
+
+||
+
+(p["القسم"] || "")
+===
+(product["القسم"] || "")
+
+||
+
+(p["شارة"] || "")
+===
+(product["شارة"] || "")
+
+);
+
+})
+.slice(0,4);
+
+if(related.length === 0){
+
+target.innerHTML = "";
+
+return;
+
+}
+
+let html = `
+
+<div style="
+margin-top:10px;
+padding-top:10px;
+border-top:1px solid #eee;
+">
+
+<div style="
+font-size:13px;
+font-weight:bold;
+color:#d81b60;
+margin-bottom:8px;
+">
+
+💖 قد يعجبك أيضاً
+
+</div>
+
+<div style="
+display:flex;
+gap:8px;
+overflow-x:auto;
+">
+
+`;
+
+related.forEach(p => {
+
+html += `
+
+<div
+onclick="
+document
+.getElementById('searchInput')
+.value='${p["الاسم"]}';
+
+searchProducts();
+"
+style="
+min-width:90px;
+cursor:pointer;
+">
+
+<img
+src="${p["الصورة"]}"
+style="
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:10px;
+border:1px solid #eee;
+">
+
+<div style="
+font-size:11px;
+text-align:center;
+margin-top:4px;
+">
+
+${p["الاسم"]}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+html += `
+</div>
+</div>
+`;
+
+target.innerHTML = html;
+
+}
 	   </script>
 </body>
 </html>
