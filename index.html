@@ -1502,99 +1502,42 @@ function showProductDetails(product){
   );
 
 }
-	  function renderProductWithRelated(product, related){
+	 function renderProductWithRelated(product, related){
 
   const container =
     document.getElementById("product-list");
 
   container.innerHTML = "";
 
-  // المنتج المختار
   renderProducts([product]);
-const selectedCard =
-container.innerHTML;
-  // عنوان المنتجات المشابهة
 
   const title = document.createElement("div");
+
   title.innerHTML = `
   <button
   onclick="
   selectedProduct=null;
   renderProducts();
-  "
-  style="
-  background:#d81b60;
-  color:white;
-  border:none;
-  padding:10px 20px;
-  border-radius:10px;
-  cursor:pointer;
-  margin-bottom:15px;
   ">
   ⬅ الرجوع للمتجر
   </button>
 
-  <div style="
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  color:#d81b60;
-  margin:20px 0;
-  ">
+  <div>
   💖 منتجات مشابهة قد تعجبك
   </div>
   `;
-title.style.gridColumn = "1 / -1";
-title.style.width = "100%";
+
+  title.style.gridColumn = "1 / -1";
+
   container.appendChild(title);
 
-  // المنتجات المشابهة
-
-renderProducts(
-  related.slice(0,4)
-);
-
-    let url =
-      item["الصورة"] || "";
-
-    card.innerHTML = `
-
-      <div class="product-header"
-      style="
-      height:110px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      overflow:hidden;
-      ">
-        <img
-        src="${url}"
-        style="
-        max-height:100px;
-        max-width:100%;
-        object-fit:contain;
-        ">
-      </div>
-
-      <div class="product-info">
-
-        <h2 class="product-title">
-        ${item["الاسم"]}
-        </h2>
-
-        <div class="product-price">
-        ${item["السعر"] || ""}
-        </div>
-
-      </div>
-
-    `;
-
-    container.appendChild(card);
-
-  });
+  renderProducts(
+    related.slice(0,4)
+  );
 
 }
+
+  
     // معالجة وتحويل روابط الـ Google Drive إلى روابط عرض مباشرة وثابتة
 function getDirectImageUrl(url) {
 
