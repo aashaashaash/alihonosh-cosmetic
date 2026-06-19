@@ -1340,10 +1340,105 @@ fetch("https://opensheet.vercel.app/1Zn2TakHVmDIEc45EHBoSygIMhBqoxq-91arajm5Pu1k
         container.innerHTML += "<div style='grid-column: 1/-1; text-align:center; color:var(--brand); padding:40px; font-size:1.1em;'>لا توجد منتجات متوفرة حالياً في هذا القسم.</div>";
         return;
       }
+if(selectedProduct){
 
+container.innerHTML += `
+<div style="
+grid-column:1/-1;
+text-align:center;
+margin-bottom:20px;
+">
+
+<button
+onclick="
+selectedProduct=null;
+renderProducts();
+"
+style="
+background:#d81b60;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:10px;
+cursor:pointer;
+margin-bottom:10px;
+">
+⬅ الرجوع للمتجر
+</button>
+
+<div style="
+font-size:22px;
+font-weight:bold;
+color:#d81b60;
+">
+💖 منتجات مشابهة قد تعجبك
+</div>
+
+</div>
+`;
+}
+		if(selectedProduct){
+
+container.innerHTML += `
+<div style="
+grid-column:1/-1;
+text-align:center;
+margin-bottom:20px;
+">
+
+<button
+onclick="
+selectedProduct=null;
+renderProducts();
+"
+style="
+background:#d81b60;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:10px;
+cursor:pointer;
+margin-bottom:10px;
+">
+⬅ الرجوع للمتجر
+</button>
+
+<div style="
+font-size:22px;
+font-weight:bold;
+color:#d81b60;
+">
+💖 منتجات مشابهة قد تعجبك
+</div>
+
+</div>
+`;
+}
       filtered.forEach(item => {
        const card = document.createElement("div");
+		  const isMainProduct =
+selectedProduct &&
+item["ID"] === selectedProduct["ID"];
+
+if(isMainProduct){
+
+  card.style.gridColumn = "1 / -1";
+  card.style.maxWidth = "500px";
+  card.style.margin = "0 auto 20px auto";
+
+}
 		  card.className = "product";
+		  const isMainProduct =
+selectedProduct &&
+item["ID"] === selectedProduct["ID"];
+
+if(isMainProduct){
+
+  card.style.gridColumn = "1 / -1";
+  card.style.maxWidth = "500px";
+  card.style.margin = "0 auto";
+
+}
 		  card.onclick = function(){
 			  showProductDetails(item);
 
@@ -1502,38 +1597,14 @@ function showProductDetails(product){
   );
 
 }
-	 function renderProductWithRelated(product, related){
+	function renderProductWithRelated(product, related){
 
-  const container =
-    document.getElementById("product-list");
+  selectedProduct = product;
 
-  container.innerHTML = "";
-
-  renderProducts([product]);
-
-  const title = document.createElement("div");
-
-  title.innerHTML = `
-  <button
-  onclick="
-  selectedProduct=null;
-  renderProducts();
-  ">
-  ⬅ الرجوع للمتجر
-  </button>
-
-  <div>
-  💖 منتجات مشابهة قد تعجبك
-  </div>
-  `;
-
-  title.style.gridColumn = "1 / -1";
-
-  container.appendChild(title);
-
-  renderProducts(
-    related.slice(0,4)
-  );
+  renderProducts([
+    product,
+    ...related.slice(0,4)
+  ]);
 
 }
 
