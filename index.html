@@ -1398,8 +1398,8 @@ const isOutOfStock = item["نفاذ"]?.trim() === "نعم";
 
         card.innerHTML = `
           ${favBtn}
-          <div class="product-header" style="height:110px; display:flex; justify-content:center; align-items:center; overflow:hidden; cursor:pointer;" onclick="openFullImage('${url}')">
-            ${mediaHtml}
+<div class="product-header"
+style="height:110px; display:flex; justify-content:center; align-items:center; overflow:hidden;">            ${mediaHtml}
           </div>
           ${isOutOfStock ? 
 			'<div class="out-of-stock-label">نفذت الكمية الحالية</div>' : ''}
