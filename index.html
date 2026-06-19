@@ -1458,20 +1458,20 @@ else {
 
         card.innerHTML = `
           ${favBtn}
-<div class="-header"
+<div class="product-header">
 style="height:110px; display:flex; justify-content:center; align-items:center; overflow:hidden;">
 ${mediaHtml}
           </div>
           ${isOutOfStock ? 
 			'<div class="out-of-stock-label">نفذت الكمية الحالية</div>' : ''}
-          <div class="-info" style="margin-top:8px;">
-            <h2 class="-title">${item["الاسم"] || "منتج بدون اسم"}</h2>
-            <div class="-price-row">
-              ${badgeHtml}
-              <span class="-price">${item["السعر"] === "هدية" ? '🎁 <b style="color:#d81b60;">هدية!</b>' : (item["السعر"] || "")}</span>
+         <div class="product-info" style="margin-top:8px;">
+            <h2 class="product-title"> ${item["الاسم"] || "منتج بدون اسم"}</h2>
+<div class="product-price-row">
+${badgeHtml}
+              <span class="product-price"> ${item["السعر"] === "هدية" ? '🎁 <b style="color:#d81b60;">هدية!</b>' : (item["السعر"] || "")}</span>
             </div>
-            <div class="-actions">
-              <button class="spec-btn" onclick="event.stopPropagation(); toggleDesc(this)">مواصفات المنتج</button>
+<div class="product-actions">
+<button class="spec-btn" onclick="event.stopPropagation(); toggleDesc(this)">مواصفات المنتج</button>
               <button class="spec-btn order-btn" ${isOutOfStock ? 'disabled style="background:#ccc; border-color:#ccc;"' : ''} onclick="event.stopPropagation(); addToCart({name: '${(item["الاسم"]||"").replace(/'/g,"\\'")}', price: '${(item["السعر"]||"").replace(/'/g,"\\'")}'})">🛒 أضف إلى السلة</button>
             </div>
             <div class="desc" style="display:none; margin-top:8px; color:#555; background:#fce4ec; padding:10px; border-radius:8px; font-size:12px; text-align:right;  word-wrap: break-word; ">
@@ -1492,10 +1492,9 @@ ${mediaHtml}
   title.innerHTML = `
     <div style="text-align:center;margin:15px 0;">
 
-      <button
-      onclick="
-      selected=null;
-      renderProducts();
+    onclick="
+selectedProduct=null;
+renderProducts();
       "
       style="
       background:#d81b60;
