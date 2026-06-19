@@ -1399,7 +1399,8 @@ const isOutOfStock = item["نفاذ"]?.trim() === "نعم";
         card.innerHTML = `
           ${favBtn}
 <div class="product-header"
-style="height:110px; display:flex; justify-content:center; align-items:center; overflow:hidden;">            ${mediaHtml}
+style="height:110px; display:flex; justify-content:center; align-items:center; overflow:hidden;">
+${mediaHtml}
           </div>
           ${isOutOfStock ? 
 			'<div class="out-of-stock-label">نفذت الكمية الحالية</div>' : ''}
@@ -1501,63 +1502,102 @@ function showProductDetails(product){
   );
 
 }
-	  function renderProductWithRelated(
-  product,
-  related
-){
+	  function renderProductWithRelated(product, related){
 
   const container =
-    document.getElementById(
-      "product-list"
-    );
+    document.getElementById("product-list");
 
   container.innerHTML = "";
 
-  renderProducts(
-    [product]
-  );
+  // المنتج المختار
+  renderProducts([product]);
 
-  container.innerHTML += `
-<button
-onclick="
-selectedProduct=null;
-renderProducts();
-"
-style="
-background:#d81b60;
-color:white;
-border:none;
-padding:10px 20px;
-border-radius:10px;
-cursor:pointer;
-margin-bottom:15px;
-">
-⬅ الرجوع للمتجر
-</button>
-    <div
-    style="
-    grid-column:1/-1;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-    color:#d81b60;
-    margin:20px 0;
-    ">
-    💖 منتجات مشابهة قد تعجبك
-    </div>
+  // عنوان المنتجات المشابهة
 
+  const title = document.createElement("div");
+
+  title.innerHTML = `
+  <button
+  onclick="
+  selectedProduct=null;
+  renderProducts();
+  "
+  style="
+  background:#d81b60;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:15px;
+  ">
+  ⬅ الرجوع للمتجر
+  </button>
+
+  <div style="
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  color:#d81b60;
+  margin:20px 0;
+  ">
+  💖 منتجات مشابهة قد تعجبك
+  </div>
   `;
 
-  related.forEach(p=>{
+  container.appendChild(title);
 
-    const old =
-      ALL_PRODUCTS;
+  // المنتجات المشابهة
 
-    ALL_PRODUCTS = [p];
+  related.forEach(item=>{
 
-    renderProducts();
+    const card = document.createElement("div");
 
-    ALL_PRODUCTS = old;
+    card.className = "product";
+
+    card.onclick = function(){
+
+      showProductDetails(item);
+
+    };
+
+    let url =
+      item["الصورة"] || "";
+
+    card.innerHTML = `
+
+      <div class="product-header"
+      style="
+      height:110px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+      ">
+        <img
+        src="${url}"
+        style="
+        max-height:100px;
+        max-width:100%;
+        object-fit:contain;
+        ">
+      </div>
+
+      <div class="product-info">
+
+        <h2 class="product-title">
+        ${item["الاسم"]}
+        </h2>
+
+        <div class="product-price">
+        ${item["السعر"] || ""}
+        </div>
+
+      </div>
+
+    `;
+
+    container.appendChild(card);
 
   });
 
