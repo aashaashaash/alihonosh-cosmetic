@@ -1381,97 +1381,52 @@ const isOutOfStock = item["نفاذ"]?.trim() === "نعم";
 		  console.log("Image URL:", url);
 
         // التحكم الذكي في الميديا وعرض الصور والفيديو بدقة
-       let mediaHtml = "";
-
-const fileType =
-(item["نوع الملف"] || "image").trim();
-
-if(fileType === "video"){
-
-  mediaHtml = `
-  <video
-    controls
-    playsinline
-    width="100%"
-    height="150"
-    style="
-      object-fit:cover;
-      border-radius:10px;
-    ">
-<source src="${url.replace("export=view","export=download")}">
-</video>
-  `;
-
-}
-else if (url.includes("youtube.com") || url.includes("youtu.be")) {
-
-  let videoId =
-    url.includes("v=")
-      ? url.split("v=")[1].split("&")[0]
-      : url.split("youtu.be/")[1].split("?")[0];
+        let mediaHtml = "";
+        if (url.includes("youtube.com") || url.includes("youtu.be")) {
+          let videoId = url.includes("v=") ? url.split("v=")[1].split("&")[0] : url.split("youtu.be/")[1].split("?")[0];
+          mediaHtml = `<iframe width="100%" height="150" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>`;
+        } else if (url.toLowerCase().endsWith(".mp4")) {
 
   mediaHtml = `
-  <iframe
-    width="100%"
-    height="150"
-    src="https://www.youtube.com/embed/${videoId}"
-    frameborder="0"
-    allowfullscreen
-    style="border-radius:10px;">
-  </iframe>
+    <video class="product-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      width="100%"
+      height="150"
+      style="object-fit:cover; border-radius:10px;">
+      <source src="${url}" type="video/mp4">
+    </video>
   `;
 
-}
-else if (url) {
-
-  mediaHtml = `
-  <img
-    src="${url}"
-    alt="${item["الاسم"] || ""}"
-    style="
-      max-height:100px;
-      max-width:100%;
-      object-fit:contain;
-    ">
-  `;
-
-}
-else {
-
-  mediaHtml = `
-  <div
-    style="
-      height:150px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#f5f5f5;
-      color:#aaa;
-      font-size:12px;
-    ">
-    لا توجد صورة
-  </div>
-  `;
-}
+} else if (url) {
+          mediaHtml = `<img src="${url}" alt="${item["الاسم"] || ''}" style="width:100%;
+height:160px;
+object-fit:contain;
+padding:5px;" />`;
+        } else {
+          mediaHtml = `<div style="height:150px; display:flex; align-items:center; justify-content:center; background:#f5f5f5; color:#aaa; font-size:12px;">لا توجد صورة</div>`;
+        }
 
         let badgeHtml = item["شارة"] && item["شارة"].trim() !== "" ? `<span class="badge">${item["شارة"]}</span>` : '<span></span>';
 
         card.innerHTML = `
           ${favBtn}
-<div class="product-header">
+<div class="product-header"
 style="height:110px; display:flex; justify-content:center; align-items:center; overflow:hidden;">
 ${mediaHtml}
           </div>
           ${isOutOfStock ? 
 			'<div class="out-of-stock-label">نفذت الكمية الحالية</div>' : ''}
-         <div class="product-info" style="margin-top:8px;">
-            <h2 class="product-title"> ${item["الاسم"] || "منتج بدون اسم"}</h2>
-<div class="product-price-row">
-${badgeHtml}
-              <span class="product-price"> ${item["السعر"] === "هدية" ? '🎁 <b style="color:#d81b60;">هدية!</b>' : (item["السعر"] || "")}</span>
+          <div class="product-info" style="margin-top:8px;">
+            <h2 class="product-title">${item["الاسم"] || "منتج بدون اسم"}</h2>
+            <div class="product-price-row">
+              ${badgeHtml}
+              <span class="product-price">${item["السعر"] === "هدية" ? '🎁 <b style="color:#d81b60;">هدية!</b>' : (item["السعر"] || "")}</span>
             </div>
-<div class="product-actions">
-<button class="spec-btn" onclick="event.stopPropagation(); toggleDesc(this)">مواصفات المنتج</button>
+            <div class="product-actions">
+              <button class="spec-btn" onclick="event.stopPropagation(); toggleDesc(this)">مواصفات المنتج</button>
               <button class="spec-btn order-btn" ${isOutOfStock ? 'disabled style="background:#ccc; border-color:#ccc;"' : ''} onclick="event.stopPropagation(); addToCart({name: '${(item["الاسم"]||"").replace(/'/g,"\\'")}', price: '${(item["السعر"]||"").replace(/'/g,"\\'")}'})">🛒 أضف إلى السلة</button>
             </div>
             <div class="desc" style="display:none; margin-top:8px; color:#555; background:#fce4ec; padding:10px; border-radius:8px; font-size:12px; text-align:right;  word-wrap: break-word; ">
@@ -1483,7 +1438,7 @@ ${badgeHtml}
 
 	
         container.appendChild(card);
-		  if(selected && index === 0){
+		  if(selectedProduct && index === 0){
 
   const title = document.createElement("div");
 
@@ -1492,9 +1447,10 @@ ${badgeHtml}
   title.innerHTML = `
     <div style="text-align:center;margin:15px 0;">
 
-    onclick="
-selectedProduct=null;
-renderProducts();
+      <button
+      onclick="
+      selectedProduct=null;
+      renderProducts();
       "
       style="
       background:#d81b60;
