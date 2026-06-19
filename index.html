@@ -1549,8 +1549,7 @@ function showProductDetails(product){
 
   // المنتجات المشابهة
 
-  related.forEach(item=>{
-
+related.slice(0,6).forEach(item=>{
     const card = document.createElement("div");
 
     card.className = "product";
