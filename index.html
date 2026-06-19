@@ -1416,17 +1416,6 @@ color:#d81b60;
 }
       filtered.forEach(item => {
        const card = document.createElement("div");
-		  const isMainProduct =
-selectedProduct &&
-item["ID"] === selectedProduct["ID"];
-
-if(isMainProduct){
-
-  card.style.gridColumn = "1 / -1";
-  card.style.maxWidth = "500px";
-  card.style.margin = "0 auto 20px auto";
-
-}
 		  card.className = "product";
 		  const isMainProduct =
 selectedProduct &&
